@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.markojocic.mera.R;
@@ -18,16 +19,15 @@ import java.util.ArrayList;
 
 public class AdapterContact extends  RecyclerView.Adapter<AdapterContact.ViewHolder> {
 
-    private ArrayList<String> contactname;
-    private ArrayList<String> contactphone;
-    private ArrayList<String> contactphoto;
     private Context context;
 
+    private ArrayList<Contacts> contact;
     public class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         public TextView txtName;
         public TextView txtPhone;
         public ImageView imgPhoto;
+        public RelativeLayout contactLayout;
         public View layout;
 
         public ViewHolder(View v) {
@@ -37,19 +37,18 @@ public class AdapterContact extends  RecyclerView.Adapter<AdapterContact.ViewHol
             txtName =  v.findViewById(R.id.contactName);
             txtPhone =  v.findViewById(R.id.contactPhone);
             imgPhoto = v.findViewById(R.id.contactPhoto);
+            contactLayout = v.findViewById(R.id.contact_layout_item);
         }
     }
 
 
 
 
-    public AdapterContact(ArrayList<String> contactName, ArrayList<String> contactPhone, ArrayList<String> contactPhoto, Context context){
+    public AdapterContact( ArrayList<Contacts> contacts, Context context){
 
-      contactname = contactName;
-      contactphone = contactPhone;
-      contactphoto = contactPhoto;
+        contact = contacts;
 
-      this.context = context;
+        this.context = context;
     }
 
 
@@ -71,14 +70,15 @@ public class AdapterContact extends  RecyclerView.Adapter<AdapterContact.ViewHol
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
 
+        Contacts c = contact.get(position);
 
-        final String name = contactname.get(position);
+        final String name = c.getContactName();
         holder.txtName.setText(name);
 
-        final  String phone = contactphone.get(position);
+        final  String phone = c.getContactPhone();
         holder.txtPhone.setText(phone);
 
-       final String photo = contactphoto.get(position);
+        final String photo = c.getContactPhoto();
 
 
         if (photo != null){
@@ -87,11 +87,11 @@ public class AdapterContact extends  RecyclerView.Adapter<AdapterContact.ViewHol
         }
 
 
-        holder.txtPhone.setOnClickListener(new View.OnClickListener() {
+        holder.contactLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                //remove(position);
+
                 Log.e("MSG", "" + phone);
 
                 Intent intent = new Intent(Intent.ACTION_DIAL);
@@ -109,13 +109,7 @@ public class AdapterContact extends  RecyclerView.Adapter<AdapterContact.ViewHol
     @Override
     public int getItemCount() {
 
-        if (contactphone == null){
-            return 0;
-        }
-        else{
-            return contactphone.size();
-        }
-
+        return contact.size();
     }
 
 }

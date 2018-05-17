@@ -17,7 +17,7 @@ public class Contacts {
 
     @SerializedName("contactPhoto")
     @Expose
-    private String getContactPhoto;
+    private String ContactPhoto;
 
     public String getContactName() {
         return contactName;
@@ -35,12 +35,12 @@ public class Contacts {
         this.contactPhone = contactPhone;
     }
 
-    public String getGetContactPhoto() {
-        return getContactPhoto;
+    public String getContactPhoto() {
+        return ContactPhoto;
     }
 
-    public void setGetContactPhoto(String getContactPhoto) {
-        this.getContactPhoto = getContactPhoto;
+    public void setContactPhoto(String ContactPhoto) {
+        this.ContactPhoto = ContactPhoto;
     }
 
     @Override
@@ -48,7 +48,7 @@ public class Contacts {
         return "Contacts{" +
                 "contactName='" + contactName + '\'' +
                 ", contactPhone='" + contactPhone + '\'' +
-                ", getContactPhoto='" + getContactPhoto + '\'' +
+                ", ContactPhoto='" + ContactPhoto + '\'' +
                 '}';
     }
 }

@@ -2,22 +2,17 @@ package com.example.markojocic.mera.jsonData;
 
 import android.util.Log;
 
-import com.example.markojocic.mera.jsonData.Feed;
-import com.example.markojocic.mera.jsonData.GitAPI;
-import com.example.markojocic.mera.jsonData.Items;
-
 import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.Response;
+
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 
 
-public class JsonData {
+public class JsonData extends ArrayList<Item> {
 
 
     final String BASE_URL = "https://api.github.com/";
@@ -25,20 +20,16 @@ public class JsonData {
 
 
 
-    public ArrayList<Items> itemsList;
-
-    /*public List<String> InputName = new ArrayList<>();
-    public List<String> InputOwner = new ArrayList<>();
-    public List<Integer> InputSize = new ArrayList<>();
-    public List<Boolean> InputHasWiki = new ArrayList<>();*/
+    public ArrayList<Item> itemsList= new ArrayList();
 
 
+    public void JsonData() {
 
-    public JsonData() {
-        itemsList = new ArrayList<Items>();
     }
 
-    public  void jsonData(String url){
+    private Callback<Feed> responseCallback;
+
+    public ArrayList<Item> jsonData(String url) {
         String Url = "https://api.github.com/search/repositories?q=" + url;
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -47,48 +38,19 @@ public class JsonData {
                 .build();
 
 
-
         GitAPI gitAPI = retrofit.create(GitAPI.class);
+
         Call<Feed> call = gitAPI.getData(Url);
-        Log.e("API interface","Api added \n");
-        call.enqueue(new Callback<Feed>() {
-            @Override
-            public void onResponse(Call<Feed> call, Response<Feed> response) {
-                Log.e(TAG, "On Response ----------->" +  response.body().toString());
-
-                //fill up arr Items
-                itemsList = response.body().getItems();
+        Log.e("API interface", "Api added \n");
 
 
+        call.enqueue(responseCallback);
 
-              /* for( int i = 0; i<itemsList.size(); i++){
-
-
-
-
-                    //print items for testing
-                    Log.d(TAG, "ON RESPONSE \n" +
-                            "Name " + itemsList.get(i).getName() + "\n"
-                            + "----------\n" +
-                            "Size " + itemsList.get(i).getSize() + "\n"
-                            + "-----------\n"+
-                            "Has_Wiki " + itemsList.get(i).getHas_wiki() + "\n"
-                            + "-----------\n"+
-                            "Owner  " + itemsList.get(i).getOwner().getLogin() + "\n"
-
-                            + "------------------------------------\n");
-                }*/
-
-            }
-
-            @Override
-            public void onFailure(Call<Feed> call, Throwable t) {
-
-                Log.e(TAG, "ON Fail ------>" + t.getMessage());
-
-
-            }
-        });
-
+        return null;
     }
+
+    public void setResponseCallback(Callback<Feed> responseCallback) {
+        this.responseCallback = responseCallback;
+    }
+
 }

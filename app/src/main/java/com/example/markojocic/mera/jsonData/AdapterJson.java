@@ -17,7 +17,7 @@ import com.example.markojocic.mera.R;
 
 
 public class AdapterJson extends RecyclerView.Adapter<AdapterJson.ViewHolder> {
-    private ArrayList<Items> values;
+    private ArrayList<Item> values = new ArrayList<>();
 
 
     // Provide a reference to the views for each data item
@@ -38,25 +38,18 @@ public class AdapterJson extends RecyclerView.Adapter<AdapterJson.ViewHolder> {
             txtSizeLine = v.findViewById(R.id.sizeLine);
         }
     }
-/*
-    public void add(int position, String item) {
-        values.add(position, item);
-        notifyItemInserted(position);
-    }
 
-    public void remove(int position) {
-        values.remove(position);
-        notifyItemRemoved(position);
-    }*/
 
     // Provide a suitable constructor (depends on the kind of dataset)
     public AdapterJson() {
+        //values = Item;
 
 
     }
 
-    public void SetAdapterJson(ArrayList<Items> Item){
-        values = Item;
+    public void setAdapterJson(ArrayList<Item> items){
+        values = items;
+
 
 
     }
@@ -82,30 +75,25 @@ public class AdapterJson extends RecyclerView.Adapter<AdapterJson.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         Log.e("ON BIND VIEW HOLDER","--------------->\n");
-        // - get element from your dataset at this position
-        // - replace the contents of the view with that element
-        final String name = values.get(position).getName();
+
+
+        Item item = values.get(position);
+        final String name = item.getName();
         holder.txtName.setText("Name: " + name);
 
 
-        /*holder.txtHeader.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                remove(position);
-            }
-        });*/
-        final String owner = values.get(position).getOwner().getLogin();
+        final String owner = item.getOwner().getLogin();
         holder.txtOwner.setText("Owner: " + owner);
 
-        final Integer size = values.get(position).getSize();
+        final Integer size = item.getSize();
         holder.txtSizeLine.setText("Size: " + size);
 
 
-        final Boolean has_wiki = values.get(position).getHas_wiki();
+        final Boolean has_wiki = item.getHas_wiki();
         Log.e("has wiki", has_wiki.toString());
 
 
-        if (values.get(position).getHas_wiki() == true){
+        if (item.getHas_wiki() == true){
             holder.itemView.setBackgroundColor(Color.parseColor("#4169E1"));
         }
 
@@ -117,12 +105,7 @@ public class AdapterJson extends RecyclerView.Adapter<AdapterJson.ViewHolder> {
     @Override
     public int getItemCount() {
 
-            if (values == null){
-                return 0;
-            }
-            else{
-                return values.size();
-            }
+            return  values.size();
 
     }
 

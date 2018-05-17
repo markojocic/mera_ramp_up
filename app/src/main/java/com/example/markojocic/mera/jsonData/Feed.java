@@ -11,13 +11,13 @@ public class Feed {
     @SerializedName("items")
     @Expose
 
-    private ArrayList<Items> items;
+    private ArrayList<Item> items;
 
-    public ArrayList<Items> getItems() {
+    public ArrayList<Item> getItems() {
         return items;
     }
 
-    public void setItems(ArrayList<Items> items) {
+    public void setItems(ArrayList<Item> items) {
         this.items = items;
     }
 
